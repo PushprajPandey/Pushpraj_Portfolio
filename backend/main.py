@@ -1,8 +1,3 @@
-"""
-FastAPI backend for Pushpraj Pandey's Portfolio AI Chat.
-Integrates OpenRouter for AI-powered resume Q&A.
-"""
-
 import logging
 import os
 import sys
