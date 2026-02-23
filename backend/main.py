@@ -103,7 +103,6 @@ FREE_MODELS = [
         "OPENROUTER_MODELS",
         "qwen/qwen3-4b:free,"
         "mistralai/mistral-small-3.1-24b-instruct:free,"
-        "google/gemma-3n-e4b-it:free,"
         "nvidia/nemotron-nano-9b-v2:free,"
         "stepfun/step-3.5-flash:free,"
         "arcee-ai/trinity-mini:free,"
