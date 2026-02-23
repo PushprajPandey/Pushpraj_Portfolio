@@ -40,12 +40,19 @@ app = FastAPI(title="Portfolio Chat API", version="1.0.0")
 # CORS — allow deployed Vercel frontend + localhost for dev
 ALLOWED_ORIGINS = os.getenv(
     "ALLOWED_ORIGINS",
-    "http://localhost:3000,http://localhost:5173,https://pushprajpandey.in,https://www.pushprajpandey.in",
+    "http://localhost:3000,http://localhost:5173,https://pushprajpandey.in,https://www.pushprajpandey.in,https://pushpraj-portfolio-five.vercel.app",
 ).split(",")
+
+# Also allow all Vercel preview deployment URLs
+ALLOWED_ORIGIN_REGEX = os.getenv(
+    "ALLOWED_ORIGIN_REGEX",
+    r"https://.*\.vercel\.app",
+)
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=ALLOWED_ORIGIN_REGEX,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
