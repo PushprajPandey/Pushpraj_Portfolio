@@ -15,7 +15,9 @@ interface ChatMsg {
   content: string;
 }
 
-const API_URL = process.env.REACT_APP_CHAT_API_URL || "http://localhost:8000";
+const RAW_API_URL = process.env.REACT_APP_CHAT_API_URL || "http://localhost:8000";
+// Ensure the URL has a protocol prefix so fetch() doesn't treat it as a relative path
+const API_URL = RAW_API_URL.startsWith("http") ? RAW_API_URL : `https://${RAW_API_URL}`;
 
 const SUGGESTIONS = [
   "What are Pushpraj's main skills?",
