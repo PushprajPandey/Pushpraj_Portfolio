@@ -14,7 +14,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from database import Base, engine, get_db
+from database import Base, engine, get_db, SessionLocal
 from models import ChatMessage, ResumeSection
 
 load_dotenv()
@@ -36,6 +36,23 @@ logger = logging.getLogger("portfolio-api")
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Portfolio Chat API", version="1.0.0")
+
+
+@app.on_event("startup")
+def seed_resume_on_startup():
+    """Ensure resume data is seeded in the runtime database."""
+    from seed_resume import seed
+    db = SessionLocal()
+    try:
+        count = db.query(ResumeSection).count()
+        if count == 0:
+            logger.info("No resume data found — seeding database…")
+            seed()
+            logger.info("Resume data seeded successfully.")
+        else:
+            logger.info("Resume data already present (%d sections).", count)
+    finally:
+        db.close()
 
 # CORS — allow deployed Vercel frontend + localhost for dev
 ALLOWED_ORIGINS = os.getenv(
